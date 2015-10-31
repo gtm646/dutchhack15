@@ -10,7 +10,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,45 +29,62 @@ public class TrendsServiceImpl implements TrendsService {
 
 	public CategoryTrendsDTO getCategoryTrends(String gpsLatitude, String gpsLongitude, String categoryId) {
 		CategoryTrendsDTO categoryTrendsDTO = new CategoryTrendsDTO();
-		//List<Company> companiesWithSbiCode = companyRepository.getCompaniesByDescription("", categoryId, "", "");
+
 		List<Company> companiesForGpsAndSibiCode = new ArrayList<>();
 		List<Company> companiesWithGps = companyRepository.getCompaniesByGps(gpsLatitude, gpsLongitude, "", "");
 		for (Company company : companiesWithGps) {
-			 if(company.getMainActivitySbiCode()==categoryId){
-				 companiesForGpsAndSibiCode.add(company);
-			 }
+			if (StringUtils.equalsIgnoreCase(company.getMainActivitySbiCode(), categoryId)) {
+				companiesForGpsAndSibiCode.add(company);
+			}
 		}
-		System.out.println(companiesForGpsAndSibiCode.size());
-		return categoryTrendsDTO;
+		System.out.println("Found matching entries: " + companiesForGpsAndSibiCode.size());
+		categoryTrendsDTO.setCategoryId(categoryId);
+		categoryTrendsDTO.setCategoryName(companiesForGpsAndSibiCode.get(0).getMainActivitysbiCodeDescription());
+
+		return getCountOfCompaniesStartedThisYear(companiesForGpsAndSibiCode, categoryTrendsDTO);
 
 	}
 
-	public int getCountOfCompaniesStartedThisYear(List<Company> companiesForGpsAndSibiCode) {
+	public CategoryTrendsDTO getCountOfCompaniesStartedThisYear(List<Company> companiesForGpsAndSibiCode,
+			CategoryTrendsDTO categoryTrendsDTO) {
+		int totalCountOfCompaniesStarted = 0;
+		int totalCountOfCompaniesClosed = 0;
+		int totalCountOfCompaniesRunning = 0;
 		for (Company company : companiesForGpsAndSibiCode) {
-
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-
-			Calendar cal = Calendar.getInstance();
-			System.out.println(sdf.format(cal.getTime()));
-			Date currentDate = null;
-			Date companyDate = null;
-
+			Date companyRegDate = null;
+			Date companyClosedDate = null;
 			try {
-				currentDate = sdf.parse(sdf.format(cal.getTime()));
-				companyDate = sdf.parse(company.getRegistrationDate());
+				if (company.getRegistrationDate() != null) {
+					companyRegDate = sdf.parse(company.getRegistrationDate());
+					Calendar cal = Calendar.getInstance();
+					cal.setTime(companyRegDate);
+					if (2010 <= cal.get(Calendar.YEAR) && cal.get(Calendar.YEAR) >= 2015) {
+						totalCountOfCompaniesStarted++;
+					}
+					if (company.getDeregistrationDate() != null || company.getDeregistrationDate() != "") {
+						totalCountOfCompaniesRunning++;
+					}
+				}
+
+				if (company.getDeregistrationDate() != null) {
+					companyClosedDate = sdf.parse(company.getDeregistrationDate());
+					Calendar cal1 = Calendar.getInstance();
+					cal1.setTime(companyClosedDate);
+					if (2010 <= cal1.get(Calendar.YEAR) && cal1.get(Calendar.YEAR) >= 2015) {
+						totalCountOfCompaniesClosed++;
+					}
+				}
+
 			} catch (ParseException e) {
-				System.err.println("date parser failed...." + currentDate + "and" + companyDate);
+				System.err.println("date parser failed...." + companyRegDate);
 			}
 
-			System.out.println(currentDate);
-			System.out.println(companyDate);
-
-			if (companyDate.compareTo(currentDate) > 0) {
-				System.out.println("companyDate is after currentDate");
-			}
 		}
-
-		return 0;
+		categoryTrendsDTO.setCountOfCompaniesStarted(totalCountOfCompaniesStarted);
+		categoryTrendsDTO.setCountOfcompaniesClosedRecently(totalCountOfCompaniesClosed);
+		categoryTrendsDTO.setCountOfcompaniesRunning(totalCountOfCompaniesRunning);
+		return categoryTrendsDTO;
 
 	}
 }

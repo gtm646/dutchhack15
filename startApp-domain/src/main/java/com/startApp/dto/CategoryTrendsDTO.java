@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 public class CategoryTrendsDTO {
 	private String categoryId;
 	private String categoryName;
-	private int CountOfCompaniesStartedThisYear;
+	private int CountOfCompaniesStarted;
 	private int CountOfcompaniesClosedRecently;
 	private int CountOfcompaniesRunning;
 
@@ -34,8 +34,8 @@ public class CategoryTrendsDTO {
 	/**
 	 * @return the countOfCompaniesStartedThisYear
 	 */
-	public int getCountOfCompaniesStartedThisYear() {
-		return CountOfCompaniesStartedThisYear;
+	public int getCountOfCompaniesStarted() {
+		return CountOfCompaniesStarted;
 	}
 
 	/**
@@ -72,8 +72,8 @@ public class CategoryTrendsDTO {
 	 * @param countOfCompaniesStartedThisYear
 	 *            the countOfCompaniesStartedThisYear to set
 	 */
-	public void setCountOfCompaniesStartedThisYear(int countOfCompaniesStartedThisYear) {
-		CountOfCompaniesStartedThisYear = countOfCompaniesStartedThisYear;
+	public void setCountOfCompaniesStarted(int countOfCompaniesStartedThisYear) {
+		CountOfCompaniesStarted = countOfCompaniesStartedThisYear;
 	}
 
 	/**

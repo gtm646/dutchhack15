@@ -5,7 +5,6 @@ package com.startApp.service;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -38,7 +37,7 @@ public class DashBoardServiceImpl implements DashBoardService {
 			CategoryDTO categoryDTO = new CategoryDTO();
 			categoryDTO.setCategoryId(sbiCode[1]);
 			categoryDTO.setCategoryName(sbiCode[0]);
-			categoryDTO.setCount(companiesWithSbiCode.size());
+			categoryDTO.setCount(companiesWithSbiCode.size()+Integer.parseInt(sbiCode[2]));
 			categoryDTOs.add(categoryDTO);
 		}
 		dashBoardDTO.setChildren(categoryDTOs);
@@ -66,13 +65,13 @@ public class DashBoardServiceImpl implements DashBoardService {
 
 		try {
 
-			br = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/SBi_code_DOH.csv")));
+			br = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/SBi_code_DOH_1.csv")));
 			while ((line = br.readLine()) != null) {
 
 				// use comma as separator
 				String[] sbiDetails = line.split(cvsSplitBy);
 
-				System.out.println("Company SBI [code= " + sbiDetails[0] + " , name=" + sbiDetails[1] + "]");
+				System.out.println("Company SBI [code= " + sbiDetails[0] + " , name=" + sbiDetails[1] + ", factor=" + sbiDetails[2] + "]");
 				companySBIDetails.add(sbiDetails);
 
 			}
