@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import com.startApp.domain.Company;
 import com.startApp.dto.DashBoardDTO;
+import com.startApp.dto.DashBoardbyCategoryDTO;
 import com.startApp.repository.kvk.CompanyRepository;
 
 /**
@@ -32,22 +33,29 @@ public class DashBoardServiceImpl implements DashBoardService {
 		List<DashBoardDTO> dashboardDtos = new ArrayList<>();
 
 		for (String[] sbiCode : getsbiCodesFromCSVFile()) {
-
-			List<Company> companiesWithSbiCode = companyRepository.getCompaniesByDescription("", sbiCode[1], "","");
+			List<Company> companiesWithSbiCode = companyRepository.getCompaniesByDescription("", sbiCode[1], "", "");
 			DashBoardDTO dashBoardDTO = new DashBoardDTO();
-			dashBoardDTO.setCompanies(companiesWithSbiCode);
-			dashBoardDTO.setCategory(sbiCode[1]);
+			dashBoardDTO.setCategoryId(sbiCode[1]);
+			dashBoardDTO.setCategoryName(sbiCode[0]);
 			dashBoardDTO.setCount(companiesWithSbiCode.size());
 			dashboardDtos.add(dashBoardDTO);
-
 		}
 
 		return dashboardDtos;
 	}
 
+	public DashBoardbyCategoryDTO getDashBoardDetailsByCategory(String categoryId) {
+
+		List<Company> companiesWithSbiCode = companyRepository.getCompaniesByDescription("", categoryId, "", "");
+		DashBoardbyCategoryDTO dashBoardCategoryDTO = new DashBoardbyCategoryDTO();
+		dashBoardCategoryDTO.setCompanies(companiesWithSbiCode);
+		dashBoardCategoryDTO.setCategory(companiesWithSbiCode.get(0).getMainActivitysbiCodeDescription());
+		return dashBoardCategoryDTO;
+	}
+
 	public List<String[]> getsbiCodesFromCSVFile() {
 
-		//String csvFile = "/SBi_code_DOH.csv";
+		// String csvFile = "/SBi_code_DOH.csv";
 		BufferedReader br = null;
 		String line = "";
 		String cvsSplitBy = ",";
@@ -82,10 +90,4 @@ public class DashBoardServiceImpl implements DashBoardService {
 
 		return companySBIDetails;
 	}
-
-	public static void main(String[] args) {
-		DashBoardServiceImpl boardServiceImpl = new DashBoardServiceImpl();
-		boardServiceImpl.getsbiCodesFromCSVFile();
-	}
-
 }
