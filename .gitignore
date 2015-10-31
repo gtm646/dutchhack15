@@ -14,3 +14,10 @@ Servers/
 .classpath
 .checkstyle
 bin/
+
+
+# IntelliJ IDEA files
+.idea/
+*.iml
+/.metadata
+/Servers*
