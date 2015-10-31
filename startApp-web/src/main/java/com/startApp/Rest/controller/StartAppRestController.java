@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.startApp.service.UsgService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,8 +35,8 @@ public class StartAppRestController {
 		return dashBoardService.getDashBoardDetailsForSbiCodes();
 	}
 
-    @RequestMapping(value = "retrieveAllJobs", method = RequestMethod.GET)
-    public Example retrieveAllJobs() {
-        return usgService.getAllAvailableJobs();
+    @RequestMapping(value = "retrieveAllJobs/{job}", method = RequestMethod.GET)
+    public Example retrieveAllJobs(@PathVariable("job") String job) {
+        return usgService.getAllAvailableJobs(job);
     }
 }

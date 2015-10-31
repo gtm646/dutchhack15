@@ -13,5 +13,5 @@ import java.util.List;
  *
  */
 public interface UsgService {
-	public Example getAllAvailableJobs();
+	public Example getAllAvailableJobs(String job);
 }

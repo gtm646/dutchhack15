@@ -17,7 +17,7 @@ public class UsgServiceImpl implements UsgService {
 	@Autowired
 	private UsgJobsRepository usgJobsRepository;
 
-	public Example getAllAvailableJobs() {
-		return usgJobsRepository.getAllAvailableJobs("a");
+	public Example getAllAvailableJobs(String job) {
+		return usgJobsRepository.getAllAvailableJobs(job);
 	}
 }
