@@ -46,10 +46,10 @@
 		</dependency>
 	
 		<!-- Spring and Transactions -->
-		<dependency>
+		<!-- <dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-tx</artifactId>
-		</dependency>
+		</dependency> -->
 		
 		<!--  Spring REST -->
 		<dependency>
