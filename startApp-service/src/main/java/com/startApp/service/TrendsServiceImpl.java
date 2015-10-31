@@ -39,7 +39,9 @@ public class TrendsServiceImpl implements TrendsService {
 		}
 		System.out.println("Found matching entries: " + companiesForGpsAndSibiCode.size());
 		categoryTrendsDTO.setCategoryId(categoryId);
-		categoryTrendsDTO.setCategoryName(companiesForGpsAndSibiCode.get(0).getMainActivitysbiCodeDescription());
+		if (companiesForGpsAndSibiCode.size() != 0) {
+			categoryTrendsDTO.setCategoryName(companiesForGpsAndSibiCode.get(0).getMainActivitysbiCodeDescription());
+		}
 
 		return getCountOfCompaniesStartedThisYear(companiesForGpsAndSibiCode, categoryTrendsDTO);
 
