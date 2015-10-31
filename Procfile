@@ -1,0 +1,1 @@
+web: java $JAVA_OPTS -jar startApp-web/target/dependency/webapp-runner.jar --port $PORT startApp-web/target/*.war
