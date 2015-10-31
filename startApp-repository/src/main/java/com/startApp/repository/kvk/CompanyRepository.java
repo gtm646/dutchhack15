@@ -16,7 +16,7 @@ public interface CompanyRepository {
 
 	public List<Company> getCompaniesByGps(String gpsLatitude, String gpsLongitude, String radius, String offset);
 
-	public List<Company> getCompaniesByDescription(String description, String code, boolean mainDescriptionOnly,
+	public List<Company> getCompaniesByDescription(String description, String code, String mainDescriptionOnly,
 			String offset);
 
 	public List<Company> getCompaniesByKvkNumber(String KvkNumber);
