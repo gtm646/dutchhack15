@@ -36,15 +36,14 @@ public class CompanyRepositoryImpl implements CompanyRepository {
 		return Arrays.asList(companies);
 	}
 
-	public List<Company> getCompaniesByDescription(String description, String code, boolean mainDescriptionOnly,
+	public List<Company> getCompaniesByDescription(String description, String code, String mainDescriptionOnly,
 			String offset) {
 
 		RestTemplate restTemplate = new RestTemplate();
-		Company[] companies = restTemplate
-				.getForObject(
-						Constants.KVK_API_BASE_NAME + "/companies/byDescription?" + "description=" + description
-								+ "&code=" + code + "&mainDescriptionOnly=" + mainDescriptionOnly + "&offset=" + offset,
-						Company[].class);
+		String url = Constants.KVK_API_BASE_NAME + "/companies/byDescription?" + "description=" + description + "&code="
+				+ code + "&mainDescriptionOnly=" + mainDescriptionOnly + "&offset=" + offset;
+		Company[] companies = restTemplate.getForObject(url, Company[].class);
+		System.out.println("requesting URL :" + url);
 		return Arrays.asList(companies);
 	}
 

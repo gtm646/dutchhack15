@@ -19,12 +19,13 @@ import org.springframework.web.client.RestTemplate;
 @Repository
 public class UsgJobsRepositoryImpl implements UsgJobsRepository {
 
+
     @Autowired
     private AuthorisedRestTemplate authorisedRestTemplate;
 
     @Override
 	public Example getAllAvailableJobs(String query) {
-		// TODO Auto-generated method stub
+		//Company[] companies = authorisedRestTemplate.getRestTemplate().getForObject(Constants.KVK_API_BASE_NAME + "/companies/city/" + city,
         RestTemplate restTemplate = authorisedRestTemplate.getRestTemplate();
         Example example = restTemplate.getForObject(Constants.USG_API_BASE_NAME + "collection=usglami",
                         Example.class);
