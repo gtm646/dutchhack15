@@ -1,0 +1,16 @@
+target/
+Servers/
+.settings/
+.recommenders
+.clover/
+.metadata/
+*.class
+*.jar
+*.pmd
+*.war
+*.zip
+*.MF
+.project
+.classpath
+.checkstyle
+bin/
