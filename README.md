@@ -1,2 +1,2 @@
 # dutchhack15
-hackathon project
+StartApp for entrepreneurs.
