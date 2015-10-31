@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.startApp.domain.Company;
-import com.startApp.repository.CompanyRepository;
+import com.startApp.repository.kvk.CompanyRepository;
 
 /**
  * @author x085982

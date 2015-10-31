@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.startApp.repository;
+package com.startApp.repository.kvk;
 
 import java.util.Arrays;
 import java.util.List;

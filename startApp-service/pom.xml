@@ -2,9 +2,9 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-		<groupId>com.gtm.startApp</groupId>
+		<groupId>com.doh.startApp</groupId>
 		<artifactId>startApp</artifactId>
-		<version>1.0.0-SNAPSHOT</version>
+		<version>0.0.1-SNAPSHOT</version>
   </parent>
   <artifactId>startApp-service</artifactId>
   
@@ -33,12 +33,12 @@
 	<dependencies>
 		
 		<dependency>
-			<groupId>com.gtm.startApp</groupId>
+			<groupId>com.doh.startApp</groupId>
 			<artifactId>startApp-repository</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>com.gtm.startApp</groupId>
+			<groupId>com.doh.startApp</groupId>
 			<artifactId>startApp-domain</artifactId>
 			<version>${project.version}</version>
 		</dependency>
