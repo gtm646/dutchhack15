@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import org.apache.commons.codec.binary.Base64;
@@ -11,7 +12,9 @@ import org.apache.commons.codec.binary.Base64;
 /**
  * A factory for creating AuthorisedRestTemplate objects.
  */
+@Component
 public class AuthorisedRestTemplate {
+
 	public RestTemplate getRestTemplate() {
 
 		SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory() {

@@ -1,29 +1,38 @@
-/**
- * 
- *//*
+
 package com.startApp.repository.usgp;
 
 import java.util.List;
 
+import com.startApp.domain.usg.Example;
+import com.startApp.utils.Constants;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.stereotype.Repository;
 
 import com.startApp.domain.Company;
+import org.springframework.web.client.RestTemplate;
 
-*//**
+/**
  * @author x085982
  *
- *//*
+ */
 @Repository
 public class UsgJobsRepositoryImpl implements UsgJobsRepository {
 
-	@Override
-	public List<Company> getAllAvailableJobs(String query) {
+    @Autowired
+    private AuthorisedRestTemplate authorisedRestTemplate;
+
+    @Override
+	public Example getAllAvailableJobs(String query) {
 		// TODO Auto-generated method stub
-		return null;
+        RestTemplate restTemplate = authorisedRestTemplate.getRestTemplate();
+        Example example = restTemplate.getForObject(Constants.USG_API_BASE_NAME + "collection=usglami",
+                        Example.class);
+        System.out.println("Example : " + example.getSnippetFormat());
+
+		return example;
 	}
+
+
 	
 }
-	
-}
-*/
