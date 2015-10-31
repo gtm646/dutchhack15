@@ -79,13 +79,7 @@
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
 		</dependency>
-        <dependency>
-            <groupId>org.apache.tomcat</groupId>
-            <artifactId>tomcat-catalina</artifactId>
-            <scope>provided</scope>
-        </dependency>
-
-    </dependencies>
+	</dependencies>	
 	
 	<build>
 		<resources>
