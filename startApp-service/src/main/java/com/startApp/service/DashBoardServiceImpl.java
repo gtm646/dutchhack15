@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.startApp.domain.Company;
+import com.startApp.dto.CategoryDTO;
 import com.startApp.dto.DashBoardDTO;
 import com.startApp.dto.DashBoardbyCategoryDTO;
 import com.startApp.repository.kvk.CompanyRepository;
@@ -28,20 +29,21 @@ public class DashBoardServiceImpl implements DashBoardService {
 	@Autowired
 	private CompanyRepository companyRepository;
 
-	public List<DashBoardDTO> getDashBoardDetailsForSbiCodes() {
-
-		List<DashBoardDTO> dashboardDtos = new ArrayList<>();
+	public DashBoardDTO getDashBoardDetailsForSbiCodes() {
+		DashBoardDTO dashBoardDTO = new DashBoardDTO();
+		List<CategoryDTO> categoryDTOs = new ArrayList<>();
 
 		for (String[] sbiCode : getsbiCodesFromCSVFile()) {
 			List<Company> companiesWithSbiCode = companyRepository.getCompaniesByDescription("", sbiCode[1], "", "");
-			DashBoardDTO dashBoardDTO = new DashBoardDTO();
-			dashBoardDTO.setCategoryId(sbiCode[1]);
-			dashBoardDTO.setCategoryName(sbiCode[0]);
-			dashBoardDTO.setCount(companiesWithSbiCode.size());
-			dashboardDtos.add(dashBoardDTO);
+			CategoryDTO categoryDTO = new CategoryDTO();
+			categoryDTO.setCategoryId(sbiCode[1]);
+			categoryDTO.setCategoryName(sbiCode[0]);
+			categoryDTO.setCount(companiesWithSbiCode.size());
+			categoryDTOs.add(categoryDTO);
 		}
+		dashBoardDTO.setChildren(categoryDTOs);
 
-		return dashboardDtos;
+		return dashBoardDTO;
 	}
 
 	public DashBoardbyCategoryDTO getDashBoardDetailsByCategory(String categoryId) {
@@ -49,7 +51,8 @@ public class DashBoardServiceImpl implements DashBoardService {
 		List<Company> companiesWithSbiCode = companyRepository.getCompaniesByDescription("", categoryId, "", "");
 		DashBoardbyCategoryDTO dashBoardCategoryDTO = new DashBoardbyCategoryDTO();
 		dashBoardCategoryDTO.setCompanies(companiesWithSbiCode);
-		dashBoardCategoryDTO.setCategory(companiesWithSbiCode.get(0).getMainActivitysbiCodeDescription());
+		dashBoardCategoryDTO.setCategoryName(companiesWithSbiCode.get(0).getMainActivitysbiCodeDescription());
+		dashBoardCategoryDTO.setCategoryId(companiesWithSbiCode.get(0).getMainActivitySbiCode());
 		return dashBoardCategoryDTO;
 	}
 

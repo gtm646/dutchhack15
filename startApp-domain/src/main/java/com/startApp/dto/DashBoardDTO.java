@@ -3,6 +3,8 @@
  */
 package com.startApp.dto;
 
+import java.util.List;
+
 import org.springframework.stereotype.Component;
 
 /**
@@ -11,44 +13,21 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class DashBoardDTO {
-	private String categoryId;
-	private String categoryName;
-	private int Count;
+	private List<CategoryDTO> children;
+
 	/**
-	 * @return the categoryId
+	 * @return the categories
 	 */
-	public String getCategoryId() {
-		return categoryId;
+	public List<CategoryDTO> getChildren() {
+		return children;
 	}
+
 	/**
-	 * @return the categoryName
+	 * @param categories
+	 *            the categories to set
 	 */
-	public String getCategoryName() {
-		return categoryName;
+	public void setChildren(List<CategoryDTO> children) {
+		this.children = children;
 	}
-	/**
-	 * @return the count
-	 */
-	public int getCount() {
-		return Count;
-	}
-	/**
-	 * @param categoryId the categoryId to set
-	 */
-	public void setCategoryId(String categoryId) {
-		this.categoryId = categoryId;
-	}
-	/**
-	 * @param categoryName the categoryName to set
-	 */
-	public void setCategoryName(String categoryName) {
-		this.categoryName = categoryName;
-	}
-	/**
-	 * @param count the count to set
-	 */
-	public void setCount(int count) {
-		Count = count;
-	}
-	
+
 }

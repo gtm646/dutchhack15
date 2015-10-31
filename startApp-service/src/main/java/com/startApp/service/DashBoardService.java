@@ -3,8 +3,6 @@
  */
 package com.startApp.service;
 
-import java.util.List;
-
 import com.startApp.dto.DashBoardDTO;
 import com.startApp.dto.DashBoardbyCategoryDTO;
 /**
@@ -12,6 +10,6 @@ import com.startApp.dto.DashBoardbyCategoryDTO;
  *
  */
 public interface DashBoardService {
-	public List<DashBoardDTO> getDashBoardDetailsForSbiCodes();
+	public DashBoardDTO getDashBoardDetailsForSbiCodes();
 	public DashBoardbyCategoryDTO getDashBoardDetailsByCategory(String categoryId);
 }
