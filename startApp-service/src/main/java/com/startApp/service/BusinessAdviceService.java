@@ -17,5 +17,5 @@ import org.springframework.web.bind.annotation.RequestParam;
  */
 public interface BusinessAdviceService {
 	public Example getAllAvailableJobs(String job);
-	public BusinessAdviceDTO businessAdviceDTO(int currOpenCount, int currRunningCount, int currClosedCount);
+	public BusinessAdviceDTO businessAdviceDTO(int currOpenCount, int currRunningCount, int currClosedCount,int captitalInvestment);
 }

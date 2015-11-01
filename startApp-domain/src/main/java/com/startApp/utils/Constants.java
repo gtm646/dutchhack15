@@ -10,4 +10,5 @@ package com.startApp.utils;
 public interface Constants {
 	public static final String KVK_API_BASE_NAME = "http://kvkhackathon.azurewebsites.net/api";
     public static final String USG_API_BASE_NAME = "http://145.128.2.100:8042/v1/search?options=all&format=json&pageLength=10&";
+    public static final String category  = "engineering";
 }

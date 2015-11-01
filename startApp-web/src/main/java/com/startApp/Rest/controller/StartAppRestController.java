@@ -60,7 +60,7 @@ public class StartAppRestController {
 	
 	@RequestMapping(value = "retrieveBusinessAdvice", method = RequestMethod.GET)
 	public BusinessAdviceDTO getBusinessAdvice(@RequestParam("currOpenCount") int currOpenCount,
-			@RequestParam("currRunningCount") int currRunningCount, @RequestParam("currClosedCount") int currClosedCount) {
-		return businessAdviceService.businessAdviceDTO(currOpenCount, currRunningCount, currClosedCount);
+			@RequestParam("currRunningCount") int currRunningCount, @RequestParam("currClosedCount") int currClosedCount, @RequestParam("captitalInvestment") int captitalInvestment) {
+		return businessAdviceService.businessAdviceDTO(currOpenCount, currRunningCount, currClosedCount,captitalInvestment);
 	}
 }

@@ -15,6 +15,7 @@ import com.startApp.domain.usg.Example;
 import com.startApp.dto.BusinessAdviceDTO;
 import com.startApp.repository.kvk.FinancialDataRepository;
 import com.startApp.repository.usgp.UsgJobsRepository;
+import com.startApp.utils.Constants;
 
 /**
  * @author x085982
@@ -32,27 +33,35 @@ public class BusinessAdviceServiceImpl implements BusinessAdviceService {
 		return usgJobsRepository.getAllAvailableJobs(job);
 	}
 
-	public BusinessAdviceDTO businessAdviceDTO(int currOpenCount, int currRunningCount, int currClosedCount) {
+	public BusinessAdviceDTO businessAdviceDTO(int currOpenCount, int currRunningCount, int currClosedCount,
+			int captitalInvestment) {
 		BusinessAdviceDTO businessAdviceDTO = new BusinessAdviceDTO();
 		businessAdviceDTO.setBusinessStabilityFactor((currRunningCount - 2 * currClosedCount) * 10);
-		businessAdviceDTO.setCapitalFactor(calculateCapitalFactor());
-		businessAdviceDTO.setWorkForceFactor(calculateWorkForceFactor());
+		businessAdviceDTO.setCapitalFactor(calculateCapitalFactor(captitalInvestment));
+		businessAdviceDTO.setWorkForceFactor((calculateWorkForceFactor()/2)*10);
 		return businessAdviceDTO;
 
 	}
 
-	private int calculateCapitalFactor() {
+	private Integer calculateCapitalFactor(int captitalInvestment) {
 		List<FinancialData> financialDatas = financialDataRepository.getAllFinancialData();
 		List<Integer> assetAmount = new ArrayList<>();
 		for (FinancialData financialData : financialDatas) {
 			assetAmount.add(financialData.getTotaleActiva());
 		}
-		return Collections.min(assetAmount);
+		int factor = 0;
+		if (captitalInvestment >= Collections.min(assetAmount)) {
+			factor = 1;
+		}
+		if (captitalInvestment < Collections.min(assetAmount)) {
+			factor = 0;
+		}
+		return factor;
 
 	}
 
 	private int calculateWorkForceFactor() {
-		return usgJobsRepository.getAllAvailableJobs("Engineering").getResults().size();
+		return usgJobsRepository.getAllAvailableJobs(Constants.category).getResults().size();
 
 	}
 }
