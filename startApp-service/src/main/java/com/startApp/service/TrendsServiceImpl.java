@@ -105,9 +105,6 @@ public class TrendsServiceImpl implements TrendsService {
 				if (year == cal1.get(Calendar.YEAR)) {
 					totalCountOfCompaniesClosed++;
 				}
-				if (year != cal1.get(Calendar.YEAR)) {
-					totalCountOfCompaniesRunning++;
-				}
 			}
 			else if(cal.get(Calendar.YEAR)>=2010){
 				totalCountOfCompaniesRunning++;
