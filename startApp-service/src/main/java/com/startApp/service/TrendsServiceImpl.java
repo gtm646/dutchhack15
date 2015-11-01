@@ -75,6 +75,8 @@ public class TrendsServiceImpl implements TrendsService {
 
 		for (Company company : companiesForGpsAndSibiCode) {
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			Calendar cal = Calendar.getInstance();
+			Calendar cal1 = Calendar.getInstance();
 			Date companyRegDate = null;
 			Date companyClosedDate = null;
 			if (company.getRegistrationDate() != null) {
@@ -84,7 +86,7 @@ public class TrendsServiceImpl implements TrendsService {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				Calendar cal = Calendar.getInstance();
+				
 				cal.setTime(companyRegDate);
 				if (cal.get(Calendar.YEAR) == year) {
 					totalCountOfCompaniesStarted++;
@@ -98,7 +100,7 @@ public class TrendsServiceImpl implements TrendsService {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				Calendar cal1 = Calendar.getInstance();
+				
 				cal1.setTime(companyClosedDate);
 				if (year == cal1.get(Calendar.YEAR)) {
 					totalCountOfCompaniesClosed++;
@@ -106,6 +108,9 @@ public class TrendsServiceImpl implements TrendsService {
 				if (year != cal1.get(Calendar.YEAR)) {
 					totalCountOfCompaniesRunning++;
 				}
+			}
+			else if(cal.get(Calendar.YEAR)>=2010){
+				totalCountOfCompaniesRunning++;
 			}
 		}
 		categoryTrendsDTO2015.setCountOfcompaniesClosedRecently(totalCountOfCompaniesClosed);
