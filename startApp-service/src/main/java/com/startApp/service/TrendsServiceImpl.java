@@ -33,9 +33,9 @@ public class TrendsServiceImpl implements TrendsService {
 		List<Company> companiesForGpsAndSibiCode = new ArrayList<>();
 		List<Company> companiesWithGps = companyRepository.getCompaniesByGps(gpsLatitude, gpsLongitude, "", "");
 		for (Company company : companiesWithGps) {
-			if (StringUtils.equalsIgnoreCase(company.getMainActivitySbiCode(), categoryId)) {
+			//if (StringUtils.equalsIgnoreCase(company.getMainActivitySbiCode(), categoryId)) {
 				companiesForGpsAndSibiCode.add(company);
-			}
+			//}
 		}
 		System.out.println("Found matching entries: " + companiesForGpsAndSibiCode.size());
 
