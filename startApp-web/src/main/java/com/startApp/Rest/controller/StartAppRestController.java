@@ -52,7 +52,7 @@ public class StartAppRestController {
 	}
 
 	@RequestMapping(value = "retrieveCategoryTrends", method = RequestMethod.GET)
-	public CategoryTrendsDTO getCategoryTrends(@RequestParam("gpsLatitude") String gpsLatitude,
+	public List<CategoryTrendsDTO> getCategoryTrends(@RequestParam("gpsLatitude") String gpsLatitude,
 			@RequestParam("gpsLongitude") String gpsLongitude, @RequestParam("categoryId") String categoryId) {
 		return trendsService.getCategoryTrends(gpsLatitude, gpsLongitude, categoryId);
 	}

@@ -27,7 +27,7 @@ public class TrendsServiceImpl implements TrendsService {
 	@Autowired
 	private CompanyRepository companyRepository;
 
-	public CategoryTrendsDTO getCategoryTrends(String gpsLatitude, String gpsLongitude, String categoryId) {
+	public List<CategoryTrendsDTO> getCategoryTrends(String gpsLatitude, String gpsLongitude, String categoryId) {
 		CategoryTrendsDTO categoryTrendsDTO = new CategoryTrendsDTO();
 
 		List<Company> companiesForGpsAndSibiCode = new ArrayList<>();
@@ -38,55 +38,80 @@ public class TrendsServiceImpl implements TrendsService {
 			}
 		}
 		System.out.println("Found matching entries: " + companiesForGpsAndSibiCode.size());
-		categoryTrendsDTO.setCategoryId(categoryId);
-		if (companiesForGpsAndSibiCode.size() != 0) {
-			categoryTrendsDTO.setCategoryName(companiesForGpsAndSibiCode.get(0).getMainActivitysbiCodeDescription());
-		}
 
-		return getCountOfCompaniesStartedThisYear(companiesForGpsAndSibiCode, categoryTrendsDTO);
+		return getCountOfCompanies(companiesForGpsAndSibiCode, categoryTrendsDTO);
 
 	}
 
-	public CategoryTrendsDTO getCountOfCompaniesStartedThisYear(List<Company> companiesForGpsAndSibiCode,
+	private List<CategoryTrendsDTO> getCountOfCompanies(List<Company> companiesForGpsAndSibiCode,
 			CategoryTrendsDTO categoryTrendsDTO) {
+
+		List<CategoryTrendsDTO> categoryTrendsDTOs = new ArrayList<>();
+		CategoryTrendsDTO categoryTrendsDTO2015 = new CategoryTrendsDTO();
+		categoryTrendsDTOs.add(getcategoryTrendsDTO(categoryTrendsDTO2015, companiesForGpsAndSibiCode, 2015));
+
+		CategoryTrendsDTO categoryTrendsDTO2014 = new CategoryTrendsDTO();
+		categoryTrendsDTOs.add(getcategoryTrendsDTO(categoryTrendsDTO2014, companiesForGpsAndSibiCode, 2014));
+
+		CategoryTrendsDTO categoryTrendsDTO2013 = new CategoryTrendsDTO();
+		categoryTrendsDTOs.add(getcategoryTrendsDTO(categoryTrendsDTO2013, companiesForGpsAndSibiCode, 2013));
+
+		CategoryTrendsDTO categoryTrendsDTO2012 = new CategoryTrendsDTO();
+		categoryTrendsDTOs.add(getcategoryTrendsDTO(categoryTrendsDTO2012, companiesForGpsAndSibiCode, 2012));
+
+		CategoryTrendsDTO categoryTrendsDTO2011 = new CategoryTrendsDTO();
+		categoryTrendsDTOs.add(getcategoryTrendsDTO(categoryTrendsDTO2011, companiesForGpsAndSibiCode, 2011));
+
+		CategoryTrendsDTO categoryTrendsDTO2010 = new CategoryTrendsDTO();
+		categoryTrendsDTOs.add(getcategoryTrendsDTO(categoryTrendsDTO2010, companiesForGpsAndSibiCode, 2010));
+		return categoryTrendsDTOs;
+	}
+
+	private CategoryTrendsDTO getcategoryTrendsDTO(CategoryTrendsDTO categoryTrendsDTO2015,
+			List<Company> companiesForGpsAndSibiCode, int year) {
 		int totalCountOfCompaniesStarted = 0;
 		int totalCountOfCompaniesClosed = 0;
 		int totalCountOfCompaniesRunning = 0;
+
 		for (Company company : companiesForGpsAndSibiCode) {
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			Date companyRegDate = null;
 			Date companyClosedDate = null;
-			try {
-				if (company.getRegistrationDate() != null) {
+			if (company.getRegistrationDate() != null) {
+				try {
 					companyRegDate = sdf.parse(company.getRegistrationDate());
-					Calendar cal = Calendar.getInstance();
-					cal.setTime(companyRegDate);
-					if (2010 <= cal.get(Calendar.YEAR) && cal.get(Calendar.YEAR) >= 2015) {
-						totalCountOfCompaniesStarted++;
-					}
-					if (company.getDeregistrationDate() != null || company.getDeregistrationDate() != "") {
-						totalCountOfCompaniesRunning++;
-					}
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
-
-				if (company.getDeregistrationDate() != null) {
-					companyClosedDate = sdf.parse(company.getDeregistrationDate());
-					Calendar cal1 = Calendar.getInstance();
-					cal1.setTime(companyClosedDate);
-					if (2010 <= cal1.get(Calendar.YEAR) && cal1.get(Calendar.YEAR) >= 2015) {
-						totalCountOfCompaniesClosed++;
-					}
+				Calendar cal = Calendar.getInstance();
+				cal.setTime(companyRegDate);
+				if (cal.get(Calendar.YEAR) == year) {
+					totalCountOfCompaniesStarted++;
 				}
-
-			} catch (ParseException e) {
-				System.err.println("date parser failed...." + companyRegDate);
 			}
 
+			if ((company.getDeregistrationDate() != null && company.getDeregistrationDate() != "")) {
+				try {
+					companyClosedDate = sdf.parse(company.getDeregistrationDate());
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				Calendar cal1 = Calendar.getInstance();
+				cal1.setTime(companyClosedDate);
+				if (year == cal1.get(Calendar.YEAR)) {
+					totalCountOfCompaniesClosed++;
+				}
+				if (year != cal1.get(Calendar.YEAR)) {
+					totalCountOfCompaniesRunning++;
+				}
+			}
 		}
-		categoryTrendsDTO.setCountOfCompaniesStarted(totalCountOfCompaniesStarted);
-		categoryTrendsDTO.setCountOfcompaniesClosedRecently(totalCountOfCompaniesClosed);
-		categoryTrendsDTO.setCountOfcompaniesRunning(totalCountOfCompaniesRunning);
-		return categoryTrendsDTO;
-
+		categoryTrendsDTO2015.setCountOfcompaniesClosedRecently(totalCountOfCompaniesClosed);
+		categoryTrendsDTO2015.setCountOfcompaniesRunning(totalCountOfCompaniesRunning);
+		categoryTrendsDTO2015.setCountOfCompaniesStarted(totalCountOfCompaniesStarted);
+		categoryTrendsDTO2015.setYear(year);
+		return categoryTrendsDTO2015;
 	}
 }

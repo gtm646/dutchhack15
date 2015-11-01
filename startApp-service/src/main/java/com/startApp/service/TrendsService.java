@@ -3,6 +3,8 @@
  */
 package com.startApp.service;
 
+import java.util.List;
+
 import com.startApp.dto.CategoryTrendsDTO;
 
 /**
@@ -10,5 +12,5 @@ import com.startApp.dto.CategoryTrendsDTO;
  *
  */
 public interface TrendsService {
-	public CategoryTrendsDTO getCategoryTrends(String gpsLatitude, String gpsLongitude, String categoryId);
+	public List<CategoryTrendsDTO> getCategoryTrends(String gpsLatitude, String gpsLongitude, String categoryId);
 }

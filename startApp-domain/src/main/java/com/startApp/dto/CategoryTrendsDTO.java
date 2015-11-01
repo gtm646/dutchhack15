@@ -11,24 +11,24 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class CategoryTrendsDTO {
-	private String categoryId;
-	private String categoryName;
+	private int year;
 	private int CountOfCompaniesStarted;
 	private int CountOfcompaniesClosedRecently;
 	private int CountOfcompaniesRunning;
 
 	/**
-	 * @return the categoryId
+	 * @return the year
 	 */
-	public String getCategoryId() {
-		return categoryId;
+	public int getYear() {
+		return year;
 	}
 
 	/**
-	 * @return the categoryName
+	 * @param year
+	 *            the year to set
 	 */
-	public String getCategoryName() {
-		return categoryName;
+	public void setYear(int year) {
+		this.year = year;
 	}
 
 	/**
@@ -50,22 +50,6 @@ public class CategoryTrendsDTO {
 	 */
 	public int getCountOfcompaniesRunning() {
 		return CountOfcompaniesRunning;
-	}
-
-	/**
-	 * @param categoryId
-	 *            the categoryId to set
-	 */
-	public void setCategoryId(String categoryId) {
-		this.categoryId = categoryId;
-	}
-
-	/**
-	 * @param categoryName
-	 *            the categoryName to set
-	 */
-	public void setCategoryName(String categoryName) {
-		this.categoryName = categoryName;
 	}
 
 	/**
