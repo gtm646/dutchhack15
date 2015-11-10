@@ -24,11 +24,11 @@ public class FinanancialDataRepositoryImpl implements FinancialDataRepository {
 
 		RestTemplate restTemplate = new RestTemplate();
 		FinancialData financialDataOfcompany1 = restTemplate
-				.getForObject(Constants.KVK_API_BASE_NAME + "/financialdata/bykvknummer/14076624", FinancialData.class);
+				.getForObject(Constants.KVK_API_BASE_NAME + "/financialdata/bykvknummer/14076624?token=88witnhykqr4ichlzwdf", FinancialData.class);
 		FinancialData financialDataOfcompany2 = restTemplate
-				.getForObject(Constants.KVK_API_BASE_NAME + "/financialdata/bykvknummer/14631754", FinancialData.class);
+				.getForObject(Constants.KVK_API_BASE_NAME + "/financialdata/bykvknummer/14631754?token=88witnhykqr4ichlzwdf", FinancialData.class);
 		FinancialData financialDataOfcompany3 = restTemplate
-				.getForObject(Constants.KVK_API_BASE_NAME + "/financialdata/bykvknummer/14619071", FinancialData.class);
+				.getForObject(Constants.KVK_API_BASE_NAME + "/financialdata/bykvknummer/14619071?token=88witnhykqr4ichlzwdf", FinancialData.class);
 
 		List<FinancialData> financialDataOfcompanies = new ArrayList<>();
 		financialDataOfcompanies.add(financialDataOfcompany1);
